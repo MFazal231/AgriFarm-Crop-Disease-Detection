@@ -5,7 +5,7 @@ const LS_PREFIX = 'cropdetect.config.'
 export function getConfig(key: Keys): string | undefined {
   const override = localStorage.getItem(LS_PREFIX + key) || undefined
   if (override) return override
-  return (import.meta as any).env?.[key] as string | undefined
+  return import.meta.env[key]
 }
 
 export function setConfig(key: Keys, value: string) {

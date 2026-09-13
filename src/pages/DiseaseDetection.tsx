@@ -80,13 +80,16 @@ export default function DiseaseDetection() {
           const labelList = labels ?? Object.keys(diseaseDatabase)
           const res = await predictFromImage(img, labelList, { modelUrl, backendApiUrl })
           if (res) {
-            const data = diseaseDatabase[res.label] ?? {
+            const knownData = diseaseDatabase[res.label] ?? {
               crop: 'Unknown',
               severity: 'Medium',
               symptoms: 'Model prediction with no mapped metadata',
               treatment: { chemical: '-', organic: '-', prevention: '-' },
               confidence: res.confidence,
             }
+            // Always trust the model's own confidence for a live prediction -
+            // the database entry's confidence is only a placeholder for demo mode.
+            const data = { ...knownData, confidence: res.confidence }
             const final = { disease: res.label, data }
             setPrediction(final)
             addHistory({ imageDataUrl: dataUrl, prediction: final })

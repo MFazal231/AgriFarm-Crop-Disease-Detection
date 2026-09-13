@@ -14,7 +14,13 @@ from tensorflow import keras
 import os
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend
+
+# Restrict CORS to known frontend origins. Override with a comma-separated
+# ALLOWED_ORIGINS env var in production (e.g. "https://your-app.vercel.app").
+allowed_origins = os.environ.get(
+    'ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173'
+).split(',')
+CORS(app, origins=allowed_origins)
 
 # Global variable to store loaded model
 model = None
@@ -180,7 +186,8 @@ if __name__ == '__main__':
         print("✓ Backend ready!")
         print("Starting Flask server on http://localhost:5000")
         print("API endpoint: POST http://localhost:5000/predict")
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
+        app.run(host='0.0.0.0', port=5000, debug=debug_mode)
     else:
         print("❌ Failed to load model. Please check model path.")
         print("Make sure you've trained the model and it exists in ml/export_tfjs/")

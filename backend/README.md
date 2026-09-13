@@ -74,10 +74,20 @@ Check server and model status.
 
 ## CORS
 
-The backend has CORS enabled for development. For production:
+The backend only accepts requests from origins listed in the `ALLOWED_ORIGINS`
+environment variable (comma-separated). It defaults to the local Vite dev
+server (`http://localhost:5173`). For production, set it to your deployed
+frontend's URL:
 
-- Update `CORS(app)` in `app.py` to restrict origins
-- Or use environment variables for allowed origins
+```bash
+export ALLOWED_ORIGINS="https://your-app.vercel.app"
+```
+
+## Debug mode
+
+Debug mode is off by default. Set `FLASK_DEBUG=true` only for local
+development - never in production, since it exposes the interactive
+Werkzeug debugger.
 
 ## Production Deployment
 

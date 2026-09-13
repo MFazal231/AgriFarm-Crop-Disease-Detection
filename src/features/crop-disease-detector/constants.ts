@@ -1,19 +1,32 @@
 import type { DiseaseDatabase } from './types'
 import type { Translations } from './types'
 
+// Keyed by the trained model's actual output classes (ml/export_tfjs/labels.json),
+// which come from the PlantVillage dataset - keep these in sync with that file.
 export const diseaseDatabase: DiseaseDatabase = {
-  'Tomato Late Blight': {
-    crop: 'Tomato',
+  'Pepper__bell___Bacterial_spot': {
+    crop: 'Bell Pepper',
     severity: 'High',
-    symptoms: 'Dark brown spots on leaves, white fungal growth on undersides',
+    symptoms: 'Small, dark, water-soaked spots on leaves and fruit that enlarge and turn brown with a yellow halo',
     treatment: {
-      chemical: 'Apply Mancozeb or Chlorothalonil fungicide every 7-10 days',
-      organic: 'Remove infected leaves, apply copper-based fungicides, ensure proper air circulation',
-      prevention: 'Avoid overhead irrigation, plant resistant varieties, rotate crops',
+      chemical: 'Apply copper-based bactericides combined with mancozeb every 7-10 days',
+      organic: 'Remove and destroy infected plant debris, apply copper soap sprays',
+      prevention: 'Use disease-free seed, avoid overhead watering, rotate crops for 2-3 years',
     },
-    confidence: 94,
+    confidence: 90,
   },
-  'Potato Early Blight': {
+  'Pepper__bell___healthy': {
+    crop: 'Bell Pepper',
+    severity: 'None',
+    symptoms: 'No visible disease symptoms detected',
+    treatment: {
+      chemical: 'No treatment needed',
+      organic: 'Continue regular care and monitoring',
+      prevention: 'Maintain good agricultural practices',
+    },
+    confidence: 96,
+  },
+  'Potato___Early_blight': {
     crop: 'Potato',
     severity: 'Medium',
     symptoms: 'Concentric rings on older leaves, yellowing around spots',
@@ -24,30 +37,19 @@ export const diseaseDatabase: DiseaseDatabase = {
     },
     confidence: 89,
   },
-  'Rice Blast': {
-    crop: 'Rice',
+  'Potato___Late_blight': {
+    crop: 'Potato',
     severity: 'High',
-    symptoms: 'Diamond-shaped lesions with gray centers on leaves',
+    symptoms: 'Dark, water-soaked lesions on leaves with white fungal growth on undersides in humid conditions',
     treatment: {
-      chemical: 'Apply Tricyclazole or Carbendazim',
-      organic: 'Use resistant varieties, silicon fertilization',
-      prevention: 'Proper water management, balanced fertilization',
+      chemical: 'Apply Mancozeb or Chlorothalonil fungicide every 7-10 days',
+      organic: 'Remove infected foliage, apply copper-based fungicides, ensure proper air circulation',
+      prevention: 'Avoid overhead irrigation, plant resistant varieties, destroy volunteer potatoes',
     },
-    confidence: 91,
+    confidence: 94,
   },
-  'Wheat Rust': {
-    crop: 'Wheat',
-    severity: 'High',
-    symptoms: 'Orange-red pustules on leaves and stems',
-    treatment: {
-      chemical: 'Apply Propiconazole or Tebuconazole',
-      organic: 'Remove infected plants, plant resistant varieties',
-      prevention: 'Early planting, remove volunteer wheat plants',
-    },
-    confidence: 87,
-  },
-  'Healthy Leaf': {
-    crop: 'Various',
+  'Potato___healthy': {
+    crop: 'Potato',
     severity: 'None',
     symptoms: 'No visible disease symptoms detected',
     treatment: {
@@ -57,7 +59,40 @@ export const diseaseDatabase: DiseaseDatabase = {
     },
     confidence: 96,
   },
-  'Tomato Leaf Mold': {
+  'Tomato_Bacterial_spot': {
+    crop: 'Tomato',
+    severity: 'High',
+    symptoms: 'Small, dark, greasy-looking spots on leaves, stems, and fruit',
+    treatment: {
+      chemical: 'Apply copper-based bactericides, avoid excessive nitrogen fertilization',
+      organic: 'Remove infected plants, use copper soap sprays, improve air circulation',
+      prevention: 'Use certified disease-free seed, avoid working with wet plants, rotate crops',
+    },
+    confidence: 88,
+  },
+  'Tomato_Early_blight': {
+    crop: 'Tomato',
+    severity: 'Medium',
+    symptoms: 'Concentric "target-spot" rings on older leaves, yellowing and leaf drop',
+    treatment: {
+      chemical: 'Apply Chlorothalonil or Azoxystrobin fungicide',
+      organic: 'Remove infected lower leaves, apply neem oil, mulch to prevent soil splash',
+      prevention: 'Crop rotation, stake plants for airflow, avoid overhead watering',
+    },
+    confidence: 89,
+  },
+  'Tomato_Late_blight': {
+    crop: 'Tomato',
+    severity: 'High',
+    symptoms: 'Dark brown spots on leaves, white fungal growth on undersides',
+    treatment: {
+      chemical: 'Apply Mancozeb or Chlorothalonil fungicide every 7-10 days',
+      organic: 'Remove infected leaves, apply copper-based fungicides, ensure proper air circulation',
+      prevention: 'Avoid overhead irrigation, plant resistant varieties, rotate crops',
+    },
+    confidence: 94,
+  },
+  'Tomato_Leaf_Mold': {
     crop: 'Tomato',
     severity: 'Medium',
     symptoms: 'Olive-green to gray fuzzy growth on underside of leaves',
@@ -68,27 +103,71 @@ export const diseaseDatabase: DiseaseDatabase = {
     },
     confidence: 85,
   },
-  'Corn Northern Leaf Blight': {
-    crop: 'Corn',
-    severity: 'High',
-    symptoms: 'Long gray-green lesions on leaves, reduced photosynthesis',
+  'Tomato_Septoria_leaf_spot': {
+    crop: 'Tomato',
+    severity: 'Medium',
+    symptoms: 'Small circular spots with dark borders and gray centers, mainly on lower leaves',
     treatment: {
-      chemical: 'Apply strobilurin or triazole fungicides',
-      organic: 'Crop rotation, residue management',
-      prevention: 'Resistant hybrids, balanced fertilization',
+      chemical: 'Apply chlorothalonil or mancozeb fungicide',
+      organic: 'Remove and destroy infected leaves, mulch around base of plant',
+      prevention: 'Rotate crops, avoid overhead irrigation, space plants for airflow',
+    },
+    confidence: 86,
+  },
+  'Tomato_Spider_mites_Two_spotted_spider_mite': {
+    crop: 'Tomato',
+    severity: 'Medium',
+    symptoms: 'Fine yellow stippling on leaves, fine webbing on undersides in heavy infestations',
+    treatment: {
+      chemical: 'Apply miticides such as abamectin, rotate active ingredients to avoid resistance',
+      organic: 'Spray insecticidal soap or neem oil, introduce predatory mites',
+      prevention: 'Avoid drought stress, keep plants well watered, monitor regularly',
+    },
+    confidence: 82,
+  },
+  'Tomato__Target_Spot': {
+    crop: 'Tomato',
+    severity: 'Medium',
+    symptoms: 'Brown lesions with concentric rings on leaves, stems, and fruit',
+    treatment: {
+      chemical: 'Apply chlorothalonil or azoxystrobin fungicide',
+      organic: 'Remove infected debris, improve air circulation',
+      prevention: 'Crop rotation, avoid leaf wetness, resistant varieties where available',
     },
     confidence: 83,
   },
-  'Grape Black Rot': {
-    crop: 'Grape',
+  'Tomato__Tomato_YellowLeaf__Curl_Virus': {
+    crop: 'Tomato',
     severity: 'High',
-    symptoms: 'Circular brown lesions with black pycnidia on leaves and fruit',
+    symptoms: 'Upward curling and yellowing of leaves, stunted growth, spread by whiteflies',
     treatment: {
-      chemical: 'Apply captan or myclobutanil',
-      organic: 'Prune infected tissue, improve airflow',
-      prevention: 'Sanitation, canopy management',
+      chemical: 'Control whitefly vectors with insecticidal sprays',
+      organic: 'Use reflective mulches and yellow sticky traps to reduce whiteflies',
+      prevention: 'Plant resistant varieties, remove infected plants promptly, control whitefly populations',
     },
-    confidence: 84,
+    confidence: 91,
+  },
+  'Tomato__Tomato_mosaic_virus': {
+    crop: 'Tomato',
+    severity: 'High',
+    symptoms: 'Mottled light and dark green pattern on leaves, distorted leaf growth, stunted plants',
+    treatment: {
+      chemical: 'No chemical cure - remove and destroy infected plants',
+      organic: 'Disinfect tools between plants, wash hands after handling tobacco products',
+      prevention: 'Use resistant varieties, certified virus-free seed, control aphid vectors',
+    },
+    confidence: 90,
+  },
+  'Tomato_healthy': {
+    crop: 'Tomato',
+    severity: 'None',
+    symptoms: 'No visible disease symptoms detected',
+    treatment: {
+      chemical: 'No treatment needed',
+      organic: 'Continue regular care and monitoring',
+      prevention: 'Maintain good agricultural practices',
+    },
+    confidence: 96,
   },
 }
 
